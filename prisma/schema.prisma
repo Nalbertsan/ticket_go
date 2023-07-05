@@ -33,7 +33,7 @@ model Administrador {
   cpf        String  @unique
   super_adm  Boolean @default(false)
   id_usuario Int     @unique
-  usuario    Usuario @relation(fields: [id_usuario], references: [id])
+  usuario    Usuario @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
 
   @@index([id_usuario])
 }
@@ -59,14 +59,15 @@ model Cliente {
   telefone    String
   data_nasc   DateTime @map("date_only")
   id_usuario  Int            @unique
-  usuario     Usuario        @relation(fields: [id_usuario], references: [id])
-  id_endereco Int            @unique
+  usuario     Usuario        @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
+  id_endereco Int            
   id_cartao   Int?           
   cartao      Cartao_Credito? @relation(fields: [id_cartao], references: [id])
-  endereco    Endereco       @relation(fields: [id_endereco], references: [id])
+  endereco    Endereco  @relation(fields: [id_endereco], references: [id])
   compras     Compra[]
 
   @@index([id_cartao])
+  @@index([id_endereco])
 }
 
 model Cartao_Credito {
