@@ -12,9 +12,153 @@ datasource db {
   relationMode      = "prisma"
 }
 
+enum Status {
+  ATIVO
+  INATIVO
+  PENDENTE
+}
+
 model Usuario {
   id       Int            @id @default(autoincrement())
   nome     String
   email    String         @unique
   senha    String
+  administrador Administrador?
+  promoter Promoter?
+  cliente Cliente?
+}
+
+model Administrador {
+  id         Int     @id @default(autoincrement())
+  cpf        String  @unique
+  super_adm  Boolean @default(false)
+  id_usuario Int     @unique
+  usuario    Usuario @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
+
+  @@index([id_usuario])
+}
+
+model Promoter {
+  id          Int      @id @default(autoincrement())
+  cpf         String?  @unique
+  cnpj        String?  @unique
+  status      Status @default(PENDENTE)
+  telefone    String
+  id_usuario  Int      @unique
+  usuario     Usuario  @relation(fields: [id_usuario], references: [id])
+  id_endereco Int      @unique
+  endereco    Endereco @relation(fields: [id_endereco], references: [id])
+  eventos     Evento[]
+  
+}
+
+model Cliente {
+  id          Int            @id @default(autoincrement())
+  perfil_foto String?
+  cpf         String         @unique
+  telefone    String
+  data_nasc   DateTime @map("date_only")
+  id_usuario  Int            @unique
+  usuario     Usuario        @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
+  id_endereco Int            
+  id_cartao   Int?           
+  cartao      Cartao_Credito? @relation(fields: [id_cartao], references: [id])
+  endereco    Endereco  @relation(fields: [id_endereco], references: [id])
+  compras     Compra[]
+
+  @@index([id_cartao])
+  @@index([id_endereco])
+}
+
+model Cartao_Credito {
+  id              Int       @id @default(autoincrement())
+  num_cartao      String    @unique
+  dono_cartao     String
+  data_vencimento String
+  cvv             String
+  clientes        Cliente[]
+}
+
+model Endereco {
+  id          Int        @id @default(autoincrement())
+  rua         String
+  numero      String
+  bairro      String
+  cidade      String
+  estado      String
+  cep         String
+  complemento String?
+  clientes    Cliente[]
+  promoters   Promoter[]
+  eventos     Evento[]
+}
+
+model Evento {
+  id          Int       @id @default(autoincrement())
+  nome        String
+  horaInicio  DateTime
+  horaFim     DateTime
+  descricao   String    @db.VarChar(500)
+  banner      String
+  id_promoter Int
+  id_endereco Int 
+  status String
+  endereco    Endereco  @relation(fields: [id_endereco], references: [id])
+  promoter    Promoter  @relation(fields: [id_promoter], references: [id])
+  lotacao     Lotacao[]
+
+  @@index([id_endereco])
+  @@index([id_promoter])
+}
+
+model Setor {
+  id      Int      @id 
+  nome    String
+  lotacao Lotacao[]
+}
+
+model Perfil {
+  id      Int      @id 
+  nome    String 
+  lotacao Lotacao[]
+
+}
+
+model Lotacao {
+  id         Int        @id @default(autoincrement())
+  valorTotal Float
+  quantidade Int
+  id_perfil  Int        
+  id_setor   Int        
+  id_evento  Int        
+  perfil     Perfil     @relation(fields: [id_perfil], references: [id], onDelete: Cascade)
+  setor      Setor      @relation(fields: [id_setor], references: [id], onDelete: Cascade)
+  evento     Evento     @relation(fields: [id_evento], references: [id], onDelete: Cascade)
+  ingressos  Ingresso[]
+
+  @@index([id_perfil])
+  @@index([id_setor])
+  @@index([id_evento])
+}
+
+model Ingresso {
+  id         Int     @id @default(autoincrement())
+  valor_pago Float
+  id_lotacao Int
+  id_compra  Int?
+  lotacao    Lotacao @relation(fields: [id_lotacao], references: [id])
+  compra     Compra?  @relation(fields: [id_compra], references: [id])
+
+  @@index([id_lotacao])
+  @@index([id_compra])
+}
+
+model Compra {
+  id            Int        @id @default(autoincrement())
+  data_hora     DateTime   @default(now())
+  id_cliente    Int
+  cliente       Cliente    @relation(fields: [id_cliente], references: [id])
+  ingressos     Ingresso[]
+
+  @@index([id_cliente])
 }
