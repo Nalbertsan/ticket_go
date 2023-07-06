@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "eslint-import-resolver-typescript": "^3.5.5",
-    "prisma": "^4.16.2"
+    "prisma": "^4.16.2",
+    "react-hook-form": "^7.45.1"
   }
 }

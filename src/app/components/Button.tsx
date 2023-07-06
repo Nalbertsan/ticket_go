@@ -14,6 +14,9 @@ interface ButtonProps {
   small?: boolean;
   icon?: IconType;
   red?: boolean;
+  className?: string;
+  h?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,19 +27,30 @@ const Button: React.FC<ButtonProps> = ({
   small,
   icon: Icon,
   red,
+  className,
+  type,
+
 }) => (
     <button
       disabled={disabled}
       onClick={onClick}
+      type={type || 'button'}
       className={`
         relative
         disabled:opacity-70
         disabled:cursor-not-allowed
-        rounded-lg
         transition
-        w-full
+        linear 
+        rounded-xl 
+        px-5 py-3 
+        text-base 
+        duration-200 
+        hover:shadow-lg 
+        hover:shadow-brand-500/50
+        hover:scale-105
+        ${className || 'w-full'}
         ${red ? 'bg-rose-500' : 'bg-sky-500'}
-        ${red ? 'hover:border-rose-200' : 'hover:border-sky-200'}
+        ${red ? 'hover:bg-rose-600' : 'hover:bg-sky-600'}
         ${outline ? 'text-black' : 'text-white'}
         ${small ? 'text-sm' : 'text-md'}
         ${small ? 'py-1' : 'py-3'}
