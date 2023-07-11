@@ -2,9 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient()
 
 async function main() {
-  await prisma.usuario.deleteMany()
-  await prisma.endereco.deleteMany()
-  /**await prisma.compra.deleteMany()
+  await prisma.compra.deleteMany()
   await prisma.ingresso.deleteMany()
   await prisma.lotacao.deleteMany()
   await prisma.evento.deleteMany()
@@ -16,7 +14,7 @@ async function main() {
   await prisma.cartao_Credito.deleteMany()
   await prisma.setor.deleteMany()
   await prisma.perfil.deleteMany()
-  **/
+  
 
   /* Criando Administradores */
   const adm1 = await prisma.administrador.create({
@@ -558,6 +556,51 @@ async function main() {
     }
   });
 
+  //Criação dos perfis e setores
+
+  const perfilGratis = await prisma.perfil.create({
+    data: {
+      id: 1,
+      nome: 'GRATIS',
+    }
+  })
+
+  const perfilMeia = await prisma.perfil.create({
+    data: {
+      id: 2,
+      nome: 'MEIA',
+    }
+  })
+
+  const perfilInteira = await prisma.perfil.create({
+    data: {
+      id: 3,
+      nome: 'INTEIRA',
+    }
+  })
+
+  const setorVip = await prisma.setor.create({
+    data: {
+      id: 1,
+      nome: 'VIP'
+    }
+  })
+
+  const setorCamarote = await prisma.setor.create({
+    data: {
+      id: 2,
+      nome: 'CAMAROTE'
+    }
+  })
+
+  const setorBackstage = await prisma.setor.create({
+    data: {
+      id: 3,
+      nome: 'BACKSTAGE'
+    }
+  })
+
+  // Criando evento
   const evento1 = await prisma.evento.create({
     data: {
       nome: "Festinha de Tosta",
@@ -568,6 +611,58 @@ async function main() {
       status: 'suspenso',
       id_promoter: promoter1.id,
       id_endereco: enderecoDeEvento1.id
+    }
+  });
+
+  //Criando lotações do evento
+
+  const lotacao1Evento1 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 2000,
+      id_evento: evento1.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento1 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 1500,
+      id_evento: evento1.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento1 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 80,
+      quantidade: 1000,
+      id_evento: evento1.id,
+      id_perfil: 3,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao4Evento1 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento1.id,
+      id_perfil: 1,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao5Evento1 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 120,
+      quantidade: 800,
+      id_evento: evento1.id,
+      id_perfil: 2,
+      id_setor: 3
     }
   });
   
@@ -583,6 +678,56 @@ async function main() {
       id_endereco: enderecoDeEvento2.id
     }
   });
+
+  const lotacao1Evento2 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1500,
+      id_evento: evento2.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento2 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 120,
+      quantidade: 1000,
+      id_evento: evento2.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento2 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 50,
+      quantidade: 500,
+      id_evento: evento2.id,
+      id_perfil: 3,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao4Evento2 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 800,
+      id_evento: evento2.id,
+      id_perfil: 1,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao5Evento2 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 1200,
+      id_evento: evento2.id,
+      id_perfil: 2,
+      id_setor: 1
+    }
+  });
   
   const evento3 = await prisma.evento.create({
     data: {
@@ -596,6 +741,56 @@ async function main() {
       id_endereco: enderecoDeEvento3.id
     }
   });
+
+  const lotacao1Evento3 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1500,
+      id_evento: evento3.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento3 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 120,
+      quantidade: 1000,
+      id_evento: evento3.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento3 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 50,
+      quantidade: 500,
+      id_evento: evento3.id,
+      id_perfil: 3,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao4Evento3 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 100,
+      quantidade: 800,
+      id_evento: evento3.id,
+      id_perfil: 2,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao5Evento3 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 1200,
+      id_evento: evento3.id,
+      id_perfil: 3,
+      id_setor: 2
+    }
+  });
   
   const evento4 = await prisma.evento.create({
     data: {
@@ -607,6 +802,56 @@ async function main() {
       status: 'ativo',
       id_promoter: promoter1.id,
       id_endereco: enderecoDeEvento2.id
+    }
+  });
+
+  const lotacao1Evento4 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1000,
+      id_evento: evento4.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento4 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 800,
+      id_evento: evento4.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento4 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 100,
+      quantidade: 1200,
+      id_evento: evento4.id,
+      id_perfil: 3,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao4Evento4 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento4.id,
+      id_perfil: 1,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao5Evento4 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 80,
+      quantidade: 1500,
+      id_evento: evento4.id,
+      id_perfil: 3,
+      id_setor: 3
     }
   });
   
@@ -623,6 +868,56 @@ async function main() {
     }
   });
 
+  const lotacao1Evento5 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento5.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento5 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 800,
+      id_evento: evento5.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento5 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 80,
+      quantidade: 1200,
+      id_evento: evento5.id,
+      id_perfil: 3,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao4Evento5 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 200,
+      quantidade: 500,
+      id_evento: evento5.id,
+      id_perfil: 1,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao5Evento5 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 120,
+      quantidade: 1500,
+      id_evento: evento5.id,
+      id_perfil: 3,
+      id_setor: 3
+    }
+  });
+
   const evento6 = await prisma.evento.create({
     data: {
       nome: "Concerto de Música Clássica",
@@ -633,6 +928,56 @@ async function main() {
       status: 'ativo',
       id_promoter: promoter3.id,
       id_endereco: enderecoDeEvento4.id
+    }
+  });
+
+  const lotacao1Evento6 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento6.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento6 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 100,
+      quantidade: 800,
+      id_evento: evento6.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento6 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1200,
+      id_evento: evento6.id,
+      id_perfil: 1,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao4Evento6 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 500,
+      id_evento: evento6.id,
+      id_perfil: 2,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao5Evento6 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 80,
+      quantidade: 1500,
+      id_evento: evento6.id,
+      id_perfil: 3,
+      id_setor: 2
     }
   });
   
@@ -648,6 +993,57 @@ async function main() {
       id_endereco: enderecoDeEvento5.id
     }
   });
+
+  const lotacao1Evento7 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento7.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento7 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 100,
+      quantidade: 800,
+      id_evento: evento7.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento7 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1200,
+      id_evento: evento7.id,
+      id_perfil: 1,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao4Evento7 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 500,
+      id_evento: evento7.id,
+      id_perfil: 2,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao5Evento7 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 80,
+      quantidade: 1500,
+      id_evento: evento7.id,
+      id_perfil: 3,
+      id_setor: 2
+    }
+  });
+  
   
   const evento8 = await prisma.evento.create({
     data: {
@@ -661,6 +1057,57 @@ async function main() {
       id_endereco: enderecoDeEvento1.id
     }
   });
+
+  const lotacao1Evento8 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento8.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento8 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 100,
+      quantidade: 800,
+      id_evento: evento8.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento8 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1200,
+      id_evento: evento8.id,
+      id_perfil: 1,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao4Evento8 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 500,
+      id_evento: evento8.id,
+      id_perfil: 2,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao5Evento8 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 80,
+      quantidade: 1500,
+      id_evento: evento8.id,
+      id_perfil: 3,
+      id_setor: 2
+    }
+  });
+  
   
   const evento9 = await prisma.evento.create({
     data: {
@@ -674,6 +1121,57 @@ async function main() {
       id_endereco: enderecoDeEvento2.id
     }
   });
+
+  const lotacao1Evento9 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento9.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento9 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 800,
+      id_evento: evento9.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento9 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1200,
+      id_evento: evento9.id,
+      id_perfil: 1,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao4Evento9 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 100,
+      quantidade: 500,
+      id_evento: evento9.id,
+      id_perfil: 2,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao5Evento9 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 80,
+      quantidade: 1500,
+      id_evento: evento9.id,
+      id_perfil: 3,
+      id_setor: 2
+    }
+  });
+  
   
   const evento10 = await prisma.evento.create({
     data: {
@@ -687,6 +1185,57 @@ async function main() {
       id_endereco: enderecoDeEvento3.id
     }
   });
+
+  const lotacao1Evento10 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 500,
+      id_evento: evento10.id,
+      id_perfil: 1,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao2Evento10 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 200,
+      quantidade: 800,
+      id_evento: evento10.id,
+      id_perfil: 2,
+      id_setor: 2
+    }
+  });
+  
+  const lotacao3Evento10 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 0,
+      quantidade: 1200,
+      id_evento: evento10.id,
+      id_perfil: 1,
+      id_setor: 3
+    }
+  });
+  
+  const lotacao4Evento10 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 150,
+      quantidade: 500,
+      id_evento: evento10.id,
+      id_perfil: 2,
+      id_setor: 1
+    }
+  });
+  
+  const lotacao5Evento10 = await prisma.lotacao.create({
+    data: {
+      valorTotal: 100,
+      quantidade: 1500,
+      id_evento: evento10.id,
+      id_perfil: 3,
+      id_setor: 2
+    }
+  });
+  
 
 }
 
